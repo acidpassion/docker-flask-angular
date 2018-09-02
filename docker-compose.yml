@@ -1,0 +1,48 @@
+version: '2'
+services:
+  client:
+      build: ./client
+      container_name: client
+      ports:
+          - "4200:4200"
+      volumes:
+          - ./client:/usr/src/app/client
+
+  server:
+      build: ./server
+      container_name: server
+      ports:
+          - "80:80"
+      expose:
+          - "80"
+      volumes:
+          - ./server:/usr/src/app/server
+          - ./nginx.conf:/etc/nginx/nginx.conf 
+      environment:
+        - FLASK_APP=/usr/src/app/server/app.py
+        - FLASK_DEBUG=1
+        # - DATABASE_URL=postgresql://user:123456@db:5432/database
+        - APP_SETTINGS=config.DevelopmentConfig
+
+
+  # db:
+  #   image: postgres
+  #   container_name: db
+  #   volumes:
+  #     - ./postgres_data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_PASSWORD=123456
+  #     - POSTGRES_DB=database
+  #   ports:
+  #     - 5432:5432
+  #   expose:
+  #     - "5432"
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+      - subnet: "10.1.1.0/24"
+        gateway: "10.1.1.1"
