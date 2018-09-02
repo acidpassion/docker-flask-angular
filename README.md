@@ -5,9 +5,6 @@ cd flask-angular-docker-dev
 docker-compose build
 docker-compose up
 ```
-### Add some environments 
-find in docker-compose.yml file this block, and edit it
-![edit environments](https://image.prntscr.com/image/4c1070002ded469bb8a5953ea31fb172.png)
 
 ### Edit code
 Code in folders `clients`(angular) and `server`(flask) you can edit, and the code will be immediately updated in the container. You do not need to restart the container! 
